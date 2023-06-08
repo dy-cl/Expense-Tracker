@@ -103,6 +103,31 @@ def get_next_month(current_month):
     current_date = datetime.datetime.strptime(current_month, '%Y_%m')
     next_month = current_date + relativedelta(months=1)
     return next_month.strftime('%Y_%m')
+
+# Validate input values before inserting into the database
+def validate_input(item, no_items, note, cost):
+    if not item or not isinstance(item, str):
+        sg.popup('Please enter a valid item.')
+        return False
+
+    if not no_items.isdigit():
+        sg.popup('Please enter a valid number of items.')
+        return False
+
+    if not isinstance(note, str):
+        sg.popup('Please enter a valid note.')
+        return False
+
+    try:
+        float_cost = float(cost)
+        if float_cost <= 0:
+            sg.popup('Please enter a valid cost.')
+            return False
+    except ValueError:
+        sg.popup('Please enter a valid cost.')
+        return False
+
+    return True
 ############################################################################################################
 
 # EVENT LOOP
@@ -123,6 +148,10 @@ while True:
         no_items = values['-NOITEMS-']
         note = values['-NOTE-']
         cost = values['-COST-']
+
+        # Validate input
+        if not validate_input(item, no_items, note, cost):
+            continue
 
         # Query database and add inputs
         cursor.execute('INSERT INTO Expenses (Item, NumberOfItems, Details, Cost) VALUES (?, ?, ?, ?)',
