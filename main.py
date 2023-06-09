@@ -181,12 +181,10 @@ while True:
         current_month = get_previous_month(current_month)
         update_month_label(current_month)
 
-        # Create database for current month if not already exists
-        if not does_database_exist(current_month):
-            database_filename = get_database_filename(current_month)
-            conn = sqlite3.connect(database_filename)
-            cursor = conn.cursor()
-            cursor.execute('''CREATE TABLE IF NOT EXISTS Expenses (
+        database_filename = get_database_filename(current_month)
+        conn = sqlite3.connect(database_filename)
+        cursor = conn.cursor()
+        cursor.execute('''CREATE TABLE IF NOT EXISTS Expenses (
                                 id INTEGER PRIMARY KEY,
                                 Item TEXT,
                                 NumberOfItems INTEGER,
@@ -201,18 +199,17 @@ while True:
         current_month = get_next_month(current_month)
         update_month_label(current_month)
 
-        # Create database for current month if not already exists
-        if not does_database_exist(current_month):
-            database_filename = get_database_filename(current_month)
-            conn = sqlite3.connect(database_filename)
-            cursor = conn.cursor()
-            cursor.execute('''CREATE TABLE IF NOT EXISTS Expenses (
+        database_filename = get_database_filename(current_month)
+        conn = sqlite3.connect(database_filename)
+        cursor = conn.cursor()
+        cursor.execute('''CREATE TABLE IF NOT EXISTS Expenses (
                                 id INTEGER PRIMARY KEY,
                                 Item TEXT,
                                 NumberOfItems INTEGER,
                                 Details TEXT,
                                 Cost REAL
                             )''')
+
 ############################################################################################################
 
 window.close()
