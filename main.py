@@ -35,24 +35,25 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS Expenses (
                     Cost REAL
                 )''')
 
-font = ('Arial', 12)
+font = ('Arial', 14)
 
 # Define layout of GUI
 layout_gui = [
     [sg.Text(f'Current Month: {current_month_text}', key='-MONTH_LABEL-', font=font)],
     [sg.Button('<', key='-PREV-', font=font), sg.Button('>', key='-NEXT-', font=font)],
-    [sg.Text('Item:', size=(10, 1), font=font), sg.Input(key='-ITEM-', size=(20, 1))],
-    [sg.Text('Number of Items:', size=(10, 1), font=font), sg.Input(key='-NOITEMS-', size=(20, 1))],
-    [sg.Text('Note:', size=(10, 1), font=font), sg.Input(key='-NOTE-', size=(20, 1))],
-    [sg.Text('Cost:', size=(10, 1), font=font), sg.Input(key='-COST-', size=(20, 1))],
+    [sg.Text('Item:', size=(15, 1), font=font), sg.Input(key='-ITEM-', size=(30, 1))],
+    [sg.Text('Number of Items:', size=(15, 1), font=font), sg.Input(key='-NOITEMS-', size=(30, 1))],
+    [sg.Text('Note:', size=(15, 1), font=font), sg.Input(key='-NOTE-', size=(30, 1))],
+    [sg.Text('Cost:', size=(15, 1), font=font), sg.Input(key='-COST-', size=(30, 1))],
     [sg.Button('Add Expense'), sg.Button('Delete Expense'), sg.Button('Exit')],
     [sg.Text('Expenses', font=font)],
     [sg.Table(values=[], headings=['ID', 'Item', 'No. Items', 'Note', 'Cost'],
-              key='-EXPENSES-', justification='left', num_rows=10, font=font,
-              auto_size_columns=True, col_widths=[15, 10, 25, 10])]
+              key='-EXPENSES-', justification='center', num_rows = 10, font=font,
+              auto_size_columns=False, def_col_width = 20, max_col_width = 100)]
 ]
 
 window = sg.Window('Expense Tracker', layout_gui, finalize=True)
+window.maximize()
 ############################################################################################################
 
 # FUNCTIONALITY
